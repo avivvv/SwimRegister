@@ -1,25 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-import Login from './Login.js'
+import Login from '../containers/Login';
 
-export default class App extends React.Component {
-    state = {
-        userName: "",
-        loggedIn: false
+export default class App extends React.PureComponent {
+    static propTypes = {
+        isUserLoggedIn: PropTypes.bool.isRequired
     }
-    
+
     render() {
-        if (!this.state.loggedIn) {
-            return <Login onLogIn={this.onLogIn}/>
+        if (this.props.isUserLoggedIn) {
+            return <div>Hello!</div>
         }
         
-        return <div>Hello {this.state.userName}!</div>
-    }
-
-    onLogIn = (userName) => {
-        this.setState({
-            userName: userName,
-            loggedIn: true
-        });
+        return <Login/>
     }
 }
