@@ -5,11 +5,11 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import ErrorSnackBar from './ErrorSnackBar'
+import VariantSnackBar from './VariantSnackBar'
 
 export default class Login extends React.PureComponent {
     static propTypes = {
-        isLoading: PropTypes.bool.isRequired,
+        isLoading: PropTypes.bool,
         error: PropTypes.string
     }
 
@@ -19,37 +19,33 @@ export default class Login extends React.PureComponent {
                 id="loginPassword"
                 label="Password"
                 type="password"
-                autofocus
+                autoFocus
                 inputRef={input => this.passwordInput = input}
                 margin="normal"
                 error={(Boolean)(this.props.error)}
             />
-            <Grid container xs="12">
-                <Grid item xs="4"/>
-                <Grid item xs="4">
+            <br/>
+            <Grid container justify="center">
+                <Grid item xs={4} md={2} lg={1}>
                     <Button
+                        component={(props) =>
+                            <button onClick={this.handleSubmit} {...props}/>
+                        }
                         variant="contained"
                         color="primary"
-                        component={
-                            (props) => <button
-                                onClick={this.handleSubmit}
-                                {...props}>
-                                login
-                            </button>
-                        }
                         fullWidth
-                        disabled={this.props.isLoading}
-                    />
+                        disabled={this.props.isLoading}>
+                        login
+                    </Button>
                     {
                         this.props.isLoading &&
                         <LinearProgress color="secondary" />
                     }
                 </Grid>
-                <Grid item xs="4"/>
             </Grid>
             {
                 this.props.error &&
-                <ErrorSnackBar message={this.props.error}/>
+                <VariantSnackBar variant="error" message={this.props.error} />
             }
         </FormGroup>
     }
